@@ -1,25 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef,useState,useEffect } from 'react';
 import { Form } from '@unform/web';
 import { Scope } from '@unform/core';
 import * as Yup from 'yup';
 import './App.css';
 
 import Input from './components/Form/Input';
-
-const initialData = {
-  email: 'rfadev@renan.com.br',
-  address: {
-    city: 'Muriae'
-  }
-}
-
-// const user = {
-//   name: "Diego",
-//   address: {
-//     street: 'Rua Teste',
-//     number: 123,
-//   }
-// }
 
 function App() {
   const formRef = useRef(null);
@@ -69,11 +54,22 @@ function App() {
     }
   }
 
+  useEffect(()=>{
+    setTimeout(()=>{
+      formRef.current.setData({
+        name:'Renan Andrade',
+        email:'filgueiras.rfa@gmail.com',
+        address:{
+          city:'Muriaé'
+        }
+      })
+    },2000);
+  },[])
 
   return (
     <div className="App">
       <h1>Hello World</h1>
-      <Form ref={formRef} initialData={initialData} onSubmit={handleSubmit}>
+      <Form ref={formRef}  onSubmit={handleSubmit}>
         <Input name="name" />
         <Input type="email" name="email" />
         <Scope path="address">
@@ -83,7 +79,6 @@ function App() {
           <Input name="state" />
           <Input name="number" />
         </Scope>
-
 
         <button type="submit">Enviar</button>
       </Form>
